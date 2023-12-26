@@ -1,3 +1,6 @@
-testbin/
-lib/
+testbin/**
+lib/**
+**/.stackdump
+**/.DSYM
+**/.DS_Store
 !.gitignore
