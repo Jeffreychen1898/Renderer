@@ -1,9 +1,11 @@
 PROJ_DIR := ./../../
 BIN_LOC := testbin/
-APP_NAME := $(PROJ_DIR)$(BIN_LOC)test_math
+APP_NAME := $(PROJ_DIR)$(BIN_LOC)test_window
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall
+CXXFLAGS := -std=c++17
 
+NATIVE_LIBS := -lm -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+EXT_LIBS := $(shell find $(PROJ_DIR)deps/ -name "*.a")
 LIBS := $(PROJ_DIR)/lib/renderer/renderer.a
 INC :=\
 	-I$(PROJ_DIR)lib/renderer/headers\
@@ -25,4 +27,4 @@ clean:
 	rm -rf $(APP_NAME)
 
 $(APP_NAME) : main.cpp | create_folder
-	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^ $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INC) -o $@ $^ $(LIBS) $(EXT_LIBS) $(NATIVE_LIBS)

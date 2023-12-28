@@ -42,8 +42,6 @@ int main()
 	TestMat3Float();
 	std::cout << "Mat4<float>" << std::endl;
 	TestMat4Float();
-
-	Renderer::printHello();
 	return 0;
 }
 

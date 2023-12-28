@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "../Utils/Exceptions.hpp"
 #include "Vector.hpp"
 
