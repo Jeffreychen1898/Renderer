@@ -6,9 +6,9 @@ CXXFLAGS := -std=c++17
 
 OS := $(shell uname)
 
-ifeq ($(OS) == Darwin)
+ifeq ($(OS), Darwin)
 	NATIVE_LIBS := -lm -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
-else ifeq($(OS) == Linux)
+else ifeq ($(OS), Linux)
 	NATIVE_LIBS := -lm -lGL -lm -lX11 -lXrandr -lXinerama -ldl
 endif
 
