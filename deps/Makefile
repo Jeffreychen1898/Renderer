@@ -6,6 +6,8 @@ GLFW/libglfw3.a\
 OS := $(shell uname)
 ifeq ($(OS), Darwin)
 	SEARCH_FOLDER := mac
+else ifeq ($(OS), Linux)
+	SEARCH_FOLDER := linux
 endif
 
 .PHONY: all
