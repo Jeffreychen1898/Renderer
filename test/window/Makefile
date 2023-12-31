@@ -4,7 +4,14 @@ APP_NAME := $(PROJ_DIR)$(BIN_LOC)test_window
 CXX := g++
 CXXFLAGS := -std=c++17
 
-NATIVE_LIBS := -lm -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+OS := $(shell uname)
+
+ifeq ($(OS) == Darwin)
+	NATIVE_LIBS := -lm -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+else ifeq($(OS) == Linux)
+	NATIVE_LIBS := -lm -lGL -lm -lX11 -lXrandr -lXinerama -ldl
+endif
+
 EXT_LIBS := $(shell find $(PROJ_DIR)deps/ -name "*.a")
 LIBS := $(PROJ_DIR)/lib/renderer/renderer.a
 INC :=\
