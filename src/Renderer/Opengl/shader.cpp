@@ -443,6 +443,8 @@ namespace Renderer
 				return 1;
 				break;
 		}
+
+		return 0;
 	}
 
 	AttribDataType Shader::getAttribDataType(const AttribType& _type)
@@ -474,6 +476,8 @@ namespace Renderer
 				return AttribDataType::INT;
 				break;
 		}
+
+		return AttribDataType::INT;
 	}
 
 	void Shader::assertValidRenderer()
