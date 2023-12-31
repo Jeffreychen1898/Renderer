@@ -5,6 +5,15 @@
 
 namespace Renderer
 {
+	class InvalidType : std::exception
+	{
+		public:
+			std::string message;
+			InvalidType(std::string _msg) : message(_msg) {};
+
+			const char* what() const noexcept override { return message.c_str(); }
+	};
+
 	class InvalidOperationException : public std::exception
 	{
 		public:
@@ -46,6 +55,24 @@ namespace Renderer
 		public:
 			std::string message;
 			FileNotFoundException(std::string _msg) : message(_msg) {};
+
+			const char* what() const noexcept override { return message.c_str(); }
+	};
+
+	class ShaderCompilationException : public std::exception
+	{
+		public:
+			std::string message;
+			ShaderCompilationException(std::string _msg) : message(_msg) {};
+
+			const char* what() const noexcept override { return message.c_str(); }
+	};
+
+	class ShaderOperationRejected : public std::exception
+	{
+		public:
+			std::string message;
+			ShaderOperationRejected(std::string _msg) : message(_msg) {};
 
 			const char* what() const noexcept override { return message.c_str(); }
 	};

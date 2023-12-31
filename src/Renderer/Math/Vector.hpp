@@ -68,6 +68,11 @@ namespace Renderer
 				return *this;
 			}
 
+			virtual const T* operator*() const
+			{
+				return &m_data[0];
+			}
+
 			virtual Vec<T, N> operator*(const Vec<T, N>& _other) const
 			{
 				Vec<T, N> new_vector;
@@ -179,6 +184,11 @@ namespace Renderer
 				y = _other.y;
 				z = _other.z;
 				w = _other.w;
+			}
+
+			virtual const T* operator*() const override
+			{
+				return &(this->m_data[0]);
 			}
 
 			Vec4& operator=(Vec4<T> _other)
@@ -301,6 +311,11 @@ namespace Renderer
 				z = _other.z;
 			}
 
+			virtual const T* operator*() const override
+			{
+				return &(this->m_data[0]);
+			}
+
 			Vec3& operator=(Vec3<T> _other)
 			{
 				if(&_other == this)
@@ -400,6 +415,11 @@ namespace Renderer
 			{
 				x = _other.x;
 				y = _other.y;
+			}
+
+			virtual const T* operator*() const override
+			{
+				return &(this->m_data[0]);
 			}
 
 			Vec2& operator=(Vec2<T> _other)

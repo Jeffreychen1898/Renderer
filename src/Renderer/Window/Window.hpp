@@ -90,6 +90,7 @@ namespace Renderer
 			unsigned int getHeight() const { return m_height; };
 			bool isFullScreen() const { return m_fullscreen; };
 			bool isCurrentContext() const;
+			bool willAutoMakeCurrent() const { return m_autoMakeCurrent; };
 			std::string getWindowTitle() const { return m_windowTitle; };
 			bool onFocus() const { return glfwGetWindowAttrib(m_window, GLFW_FOCUSED) == GLFW_TRUE; };
 

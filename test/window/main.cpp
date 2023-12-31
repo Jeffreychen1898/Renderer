@@ -13,8 +13,6 @@
  * scroll up to make window go up
  * scroll down to make window go down
  *
- * assert all the getters each frame
- *
  * window on focus, print to console
  *
  * all window have their own icon
@@ -97,10 +95,12 @@ int main()
 	window_one.init(event_one->window_size, event_one->window_size, "Window 1");
 	window_one.setPosition(event_one->window_x, event_one->window_y);
 	window_one.setIcon("./logo1.png");
+	window_one.setCursor("./logo1.png", 0, 0);
 
 	window_two.init(event_two->window_size, event_two->window_size, "Window 2");
 	window_two.setPosition(event_two->window_x, event_two->window_y);
 	window_two.setIcon("./logo2.png");
+	window_two.setCursor("./logo2.png", 16, 16);
 
 	window_one.addEvents(event_one);
 	window_two.addEvents(event_two);

@@ -11,6 +11,11 @@ namespace Renderer
 		if(!glfwInit())
 			throw Renderer::WindowCreationFailed("GLFW Initialization Failed!");
 
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 		// get the monitor information
 		GLFWmonitor** get_monitors = glfwGetMonitors(&s_monitorCount);
 

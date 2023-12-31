@@ -257,6 +257,11 @@ namespace Renderer
 				memcpy(this->m_data, _other.m_data, sizeof(T) * 16);
 			}
 
+			const T* operator*() const override
+			{
+				return &(this->m_data[0]);
+			}
+
 			T determinant() const
 			{
 				T determinant_value = 0;
@@ -454,6 +459,11 @@ namespace Renderer
 					v02 * (v10 * v21 - v11 * v20);
 			}
 
+			const T* operator*() const override
+			{
+				return &(this->m_data[0]);
+			}
+
 			void inverse()
 			{
 				T get_det = determinant();
@@ -585,6 +595,11 @@ namespace Renderer
 			Mat2(const Mat2<T>& _other)
 			{
 				memcpy(this->m_data, _other.m_data, sizeof(T) * 4);
+			}
+
+			const T* operator*() const override
+			{
+				return &(this->m_data[0]);
 			}
 
 			T determinant() const
