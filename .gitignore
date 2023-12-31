@@ -4,4 +4,4 @@ lib/**
 **/.DSYM
 **/.DS_Store
 !.gitignore
-deps/**/*.a
+deps/*/*.a
