@@ -42,6 +42,7 @@ namespace Renderer
 			static int s_monitorCount;
 			static Monitor* s_monitors;
 			static Window* s_currentContext;
+			static int s_numWindows;
 
 			GLFWwindow* m_window;
 			unsigned int m_width;
@@ -96,7 +97,6 @@ namespace Renderer
 
 			static unsigned int getMonitorCount() { return s_monitorCount; };
 			static void GLFWInit();
-			static void GLFWFinished();
 			static void pollEvents() { glfwPollEvents(); };
 
 			static Monitor getMonitorInfo(int _monitor = 0) { return s_monitors[_monitor]; };
@@ -110,5 +110,7 @@ namespace Renderer
 			static void GLFWMouseScrollEvent(GLFWwindow* _window, double _dx, double _dy);
 
 			void assertContextCurrent(std::string _func);
+
+			static void GLFWFinished();
 	};
 }

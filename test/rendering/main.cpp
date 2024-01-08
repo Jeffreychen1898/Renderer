@@ -117,7 +117,5 @@ int main()
 
 		Renderer::Window::pollEvents();
 	}
-
-	Renderer::Window::GLFWFinished();
 	return 0;
 }

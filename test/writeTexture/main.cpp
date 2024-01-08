@@ -47,8 +47,6 @@ int main()
 	delete[] large_texture;
 
 	texture.write("largeTexture.png", Renderer::TextureType::PNG);
-
-	Renderer::Window::GLFWFinished();
 	return 0;
 }
 

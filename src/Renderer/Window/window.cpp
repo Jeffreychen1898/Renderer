@@ -5,6 +5,7 @@ namespace Renderer
 	int Window::s_monitorCount = 0;
 	Renderer::Monitor* Window::s_monitors = nullptr;
 	Renderer::Window* Window::s_currentContext = nullptr;
+	int Window::s_numWindows = 0;
 	void Window::GLFWInit()
 	{
 		// initialize GLFW
@@ -62,6 +63,8 @@ namespace Renderer
 		m_cursorGLFWImage.width = 0;
 		m_cursorGLFWImage.height = 0;
 		m_cursorGLFWImage.pixels = nullptr;
+
+		++ s_numWindows;
 	}
 
 	void Window::init(unsigned int _width, unsigned int _height, const char* _title)
@@ -348,5 +351,10 @@ namespace Renderer
 			delete each_event;
 
 		glfwDestroyWindow(m_window);
+
+		-- s_numWindows;
+
+		if(s_numWindows == 0)
+			GLFWFinished();
 	}
 }

@@ -120,7 +120,5 @@ int main()
 
 	texture.readPixels();
 	texture.write("simple.jpg", Renderer::TextureType::JPG);
-
-	Renderer::Window::GLFWFinished();
 	return 0;
 }

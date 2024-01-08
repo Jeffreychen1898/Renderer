@@ -8,11 +8,8 @@ int main() {
 	Renderer::Window window;
 	window.init(800, 600, "Test Shaders");
 
-	Renderer::Render renderer;
-	renderer.attach(&window);
-
 	Renderer::Shader shader;
-	shader.attach(&renderer);
+	shader.attach(&window);
 	shader.createFromFile("./vertex.glsl", "./fragment.glsl", true);
 	shader.vertexAttribAdd(0, Renderer::AttribType::VEC3);
 	shader.vertexAttribAdd(1, Renderer::AttribType::VEC3);
@@ -50,11 +47,8 @@ int main() {
 	Renderer::Window window2;
 	window2.init(800, 600, "Test Shaders 2");
 
-	Renderer::Render renderer2;
-	renderer2.attach(&window2);
-
 	Renderer::Shader shader2;
-	shader2.attach(&renderer2);
+	shader2.attach(&window2);
 	shader2.createFromFile("./vertex.glsl", "./fragment.glsl", true);
 	shader2.vertexAttribAdd(0, Renderer::AttribType::VEC3);
 	shader2.vertexAttribAdd(1, Renderer::AttribType::VEC3);
@@ -94,7 +88,5 @@ int main() {
 		window2.swapBuffers();
 		Renderer::Window::pollEvents();
 	}
-
-	Renderer::Window::GLFWFinished();
     return 0;
 }
