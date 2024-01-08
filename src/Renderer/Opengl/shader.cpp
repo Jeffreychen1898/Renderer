@@ -9,12 +9,12 @@ namespace Renderer
 	{
 	}
 
-	void Shader::attach(Renderer::Render* _renderer)
+	void Shader::attach(Renderer::Window* _window)
 	{
 		if(m_window)
 			throw Renderer::ShaderOperationRejected("Shader can only be attached to a Renderer::Render class once!");
 
-		m_window = _renderer->getWindow();
+		m_window = _window;
 	}
 
 	void Shader::create(const char* _vertexCode, const char* _fragmentCode, bool _checkErrs)
@@ -171,6 +171,10 @@ namespace Renderer
 		assertValidRenderer();
 		assertCurrentContext();
 
+		// vertexAttribAdd() called after vertexAttribsEnable() should be ignored
+		if(m_attribOffset > 0)
+			return;
+
 		int attribute_size = getAttribSize(_attribType);
 		AttribDataType attrib_datatype = getAttribDataType(_attribType);
 		m_vbos.push_back({ 0, attribute_size, _location, attrib_datatype });
@@ -181,6 +185,10 @@ namespace Renderer
 		assertValidRenderer();
 		assertCurrentContext();
 		assertShaderBound("vertexAttribsEnable()");
+
+		// vertexAttribsEnable() should only be called once
+		if(m_attribOffset > 0)
+			return;
 
 		unsigned int vertex_size = 0;
 		for(VBO& vbo : m_vbos)
@@ -518,5 +526,22 @@ namespace Renderer
 
 	Shader::~Shader()
 	{
+		if(!m_initialized)
+			return;
+
+		// delete all the vbo
+		for(VBO& each_vbo : m_vbos)
+			glDeleteBuffers(1, &each_vbo.vbo);
+
+		m_vbos.clear();
+
+		// delete the index buffer
+		glDeleteBuffers(1, &m_ibo);
+
+		// delete the vao
+		glDeleteVertexArrays(1, &m_vao);
+
+		// delete the shader program
+		glDeleteProgram(m_program);
 	}
 }

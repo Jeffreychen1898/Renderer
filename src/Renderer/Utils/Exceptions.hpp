@@ -76,4 +76,31 @@ namespace Renderer
 
 			const char* what() const noexcept override { return message.c_str(); }
 	};
+
+	class InvalidFormat : public std::exception
+	{
+		public:
+			std::string message;
+			InvalidFormat(std::string _msg) : message(_msg) {};
+
+			const char* what() const noexcept override { return message.c_str(); }
+	};
+
+	class TextureOperationRejected : public std::exception
+	{
+		public:
+			std::string message;
+			TextureOperationRejected(std::string _msg) : message(_msg) {};
+
+			const char* what() const noexcept override { return message.c_str(); }
+	};
+
+	class RenderingException : public std::exception
+	{
+		public:
+			std::string message;
+			RenderingException(std::string _msg) : message(_msg) {};
+
+			const char* what() const noexcept override { return message.c_str(); }
+	};
 }

@@ -481,7 +481,7 @@ namespace Renderer
 
 	namespace Math
 	{
-		float PI = 3.14159265359;
+		const float PI = 3.14159265359;
 
 		template<typename T>
 		T Lerp(T _start, T _end, float _t)

@@ -7,7 +7,7 @@
 
 #include <glad/glad.h>
 
-#include "../Render.hpp"
+#include "../Window/Window.hpp"
 
 namespace Renderer
 {
@@ -74,7 +74,7 @@ namespace Renderer
 			Shader(bool _autoBind = false);
 			~Shader();
 
-			void attach(Renderer::Render* _renderer);
+			void attach(Renderer::Window* _window);
 			void create(const char* _vertexCode, const char* _fragmentCode, bool _checkErrs = false);
 			void createFromFile(const char* _vertexPath, const char* _fragmentPath, bool _checkErrs = false);
 
@@ -99,9 +99,12 @@ namespace Renderer
 			void vertexAttribAdd(unsigned int _location, AttribType _attribType);
 			void vertexAttribsEnable();
 
-			Renderer::Window* getWindow() { return m_window; };
-			// get vbo
-			// get uniforms
+			const Renderer::Window* getWindow() const { return m_window; };
+			const std::list<VBO>& getVBO() const { return m_vbos; };
+			const std::unordered_map<const char*, UniformObject>& getUniforms() const { return m_uniformLocation; };
+			unsigned int getVertexBitSize() const { return static_cast<unsigned int>(m_attribOffset); };
+
+			static Shader* getCurrentShader() { return s_currentShader; };
 
 		private:
 			void assertValidRenderer();

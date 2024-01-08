@@ -666,4 +666,18 @@ namespace Renderer
 				);
 			}
 	};
+
+	namespace Math
+	{
+		template<typename T>
+		Mat4<T> projection2D(T _l, T _r, T _t, T _b, T _n, T _f)
+		{
+			return Mat4<T>(
+				((T) 2) / (_r - _l), 0, 0, -(_r + _l)/(_r - _l),
+				0, ((T) 2) / (_t - _b), 0, -(_t + _b)/(_t - _b),
+				0, 0, ((T) -2) / (_f - _n), -(_f + _n)/(_f - _n),
+				0, 0, 0, 1
+			);
+		}
+	}
 }

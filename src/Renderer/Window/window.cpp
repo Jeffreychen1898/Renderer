@@ -79,19 +79,25 @@ namespace Renderer
 		// make current
 		makeCurrent();
 
-		// add the event listeners
-		glfwSetKeyCallback(m_window, GLFWKeyEvent);
-		glfwSetMouseButtonCallback(m_window, GLFWMouseButtonEvent);
-		glfwSetCursorPosCallback(m_window, GLFWMouseMoveEvent);
-		glfwSetFramebufferSizeCallback(m_window, GLFWWindowResizeEvent);
-		glfwSetScrollCallback(m_window, GLFWMouseScrollEvent);
+		// load opengl
+		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+			throw Renderer::WindowCreationFailed("Failed to load OpenGL Context!");
 
 		// attach window to this class
 		glfwSetWindowUserPointer(m_window, this);
 
-		// load opengl
-		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-			throw Renderer::WindowCreationFailed("Failed to load OpenGL Context!");
+		// add the event listeners
+		glfwSetKeyCallback(m_window, GLFWKeyEvent);
+		glfwSetMouseButtonCallback(m_window, GLFWMouseButtonEvent);
+		glfwSetCursorPosCallback(m_window, GLFWMouseMoveEvent);
+		glfwSetFramebufferSizeCallback(m_window, GLFWFrameBufferResizeEvent);
+		glfwSetWindowSizeCallback(m_window, GLFWWindowResizeEvent);
+		glfwSetScrollCallback(m_window, GLFWMouseScrollEvent);
+
+		// set the viewport size
+		int framebuffer_width, framebuffer_height;
+		glfwGetFramebufferSize(m_window, &framebuffer_width, &framebuffer_height);
+		glViewport(0, 0, framebuffer_width, framebuffer_height);
 	}
 
 	void Window::resize(unsigned int _width, unsigned int _height)
@@ -304,9 +310,18 @@ namespace Renderer
 			each_event->MouseMove(_x, _y);
 	}
 
+	void Window::GLFWFrameBufferResizeEvent(GLFWwindow* _window, int _width, int _height)
+	{
+		Window* window_instance = reinterpret_cast<Window*>(glfwGetWindowUserPointer(_window));
+		window_instance->makeCurrent();
+		glViewport(0, 0, _width, _height);
+	}
+
 	void Window::GLFWWindowResizeEvent(GLFWwindow* _window, int _width, int _height)
 	{
 		Window* window_instance = reinterpret_cast<Window*>(glfwGetWindowUserPointer(_window));
+		window_instance->m_width = _width;
+		window_instance->m_height = _height;
 		for(WindowEvents* each_event : window_instance->m_windowEvents)
 			each_event->WindowResize(_width, _height);
 	}

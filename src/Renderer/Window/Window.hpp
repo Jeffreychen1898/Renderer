@@ -105,6 +105,7 @@ namespace Renderer
 			static void GLFWKeyEvent(GLFWwindow* _window, int _key, int _scancode, int _action, int _mods);
 			static void GLFWMouseButtonEvent(GLFWwindow* _window, int _button, int _action, int _mods);
 			static void GLFWMouseMoveEvent(GLFWwindow* _window, double _x, double _y);
+			static void GLFWFrameBufferResizeEvent(GLFWwindow* _window, int _width, int _height);
 			static void GLFWWindowResizeEvent(GLFWwindow* _window, int _width, int _height);
 			static void GLFWMouseScrollEvent(GLFWwindow* _window, double _dx, double _dy);
 
