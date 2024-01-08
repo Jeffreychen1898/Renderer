@@ -717,7 +717,7 @@ void TestVec3Float()
 	cpy_constructor.x = 4;
 
 	assert(cpy_constructor.x == 4.f && cpy_constructor.y == 2.f);
-	assert(cpy_constructor.z = 3.f);
+	assert(cpy_constructor.z == 3.f);
 	assert(full_constructor.x == 1.f && full_constructor.y == 2.f);
 	assert(full_constructor.z == 3.f);
 
