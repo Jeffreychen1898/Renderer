@@ -285,6 +285,9 @@ namespace Renderer
 		if(_type == DrawType::NONE)
 			return;
 
+		if(Renderer::Shader::getCurrentShader()->getVertexBitSize() * _vertexCount >= m_vertexBatchSize)
+			throw Renderer::RenderingException("The shape is too large. Consider splitting it up or changing the vertex batch size!");
+
 		if(m_currentDrawType != _type)
 			render(); // flush all the other shapes first
 
