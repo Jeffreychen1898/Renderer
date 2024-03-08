@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 
 #include "../Utils/Exceptions.hpp"
 #include "Vector.hpp"
@@ -27,14 +28,8 @@ namespace Renderer
 			void transpose()
 			{
 				for(int i=0;i<N;++i)
-				{
 					for(int j=i+1;j<N;++j)
-					{
-						T store_original = m_data[i * N + j];
-						m_data[i * N + j] = m_data[j * N + i];
-						m_data[j * N + i] = store_original;
-					}
-				}
+						std::swap(m_data[i * N + j], m_data[j * N + i]);
 			}
 
 			void identity()
@@ -58,14 +53,14 @@ namespace Renderer
 			{
 				if(_r >= N || _r < 0 || _c >= N || _c < 0)
 					throw Renderer::OutOfRangeException("Index out of range!");
-				return m_data[_r * N + _c];
+				return m_data[_c * N + _r];
 			}
 
 			void set(int _r, int _c, T _val)
 			{
 				if(_r >= N || _r < 0 || _c >= N || _c < 0)
 					throw Renderer::OutOfRangeException("Index out of range!");
-				m_data[_r * N + _c] = _val;
+				m_data[_c * N + _r] = _val;
 			}
 
 			virtual const T* operator*() const
@@ -78,7 +73,8 @@ namespace Renderer
 				if(&_other == this)
 					return *this;
 
-				memcpy(m_data, _other.m_data, sizeof(T) * N * N);
+				Mat<T, N> temp(_other);
+				std::swap(m_data, temp.m_data);
 
 				return *this;
 			}
@@ -90,7 +86,7 @@ namespace Renderer
 				{
 					T sum = 0;
 					for(int k=0;k<N;++k)
-						sum += m_data[i * N + k] * _other.get(k);
+						sum += m_data[k * N + i] * _other.get(k);
 
 					new_vector.set(i, sum);
 				}
@@ -107,7 +103,7 @@ namespace Renderer
 					{
 						T sum = 0;
 						for(int k=0;k<N;++k)
-							sum += m_data[i * N + k] * _other.at(k, j);
+							sum += m_data[k * N + i] * _other.at(k, j);
 
 						new_matrix.set(i, j, sum);
 					}
@@ -121,7 +117,7 @@ namespace Renderer
 				Mat<T, N> new_matrix;
 				for(int i=0;i<N;++i)
 					for(int j=0;j<N;++j)
-						new_matrix.set(i, j, m_data[i*N+j] + _other.at(i,j));
+						new_matrix.set(i, j, m_data[j*N+i] + _other.at(i,j));
 
 				return new_matrix;
 			}
@@ -131,7 +127,7 @@ namespace Renderer
 				Mat<T, N> new_matrix;
 				for(int i=0;i<N;++i)
 					for(int j=0;j<N;++j)
-						new_matrix.set(i, j, m_data[i*N+j] - _other.at(i,j));
+						new_matrix.set(i, j, m_data[j*N+i] - _other.at(i,j));
 
 				return new_matrix;
 			}
@@ -160,7 +156,7 @@ namespace Renderer
 				for(int i=0;i<N;++i)
 				{
 					for(int j=0;j<N;++j)
-						_os << m_data[i * N + j] << " ";
+						_os << m_data[j * N + i] << " ";
 					_os << "\n";
 				}
 				_os << "]\n";
@@ -172,23 +168,23 @@ namespace Renderer
 	{
 		public:
 			T& v00 = this->m_data[0];
-			T& v01 = this->m_data[1];
-			T& v02 = this->m_data[2];
-			T& v03 = this->m_data[3];
+			T& v10 = this->m_data[1];
+			T& v20 = this->m_data[2];
+			T& v30 = this->m_data[3];
 
-			T& v10 = this->m_data[4];
+			T& v01 = this->m_data[4];
 			T& v11 = this->m_data[5];
-			T& v12 = this->m_data[6];
-			T& v13 = this->m_data[7];
+			T& v21 = this->m_data[6];
+			T& v31 = this->m_data[7];
 
-			T& v20 = this->m_data[8];
-			T& v21 = this->m_data[9];
+			T& v02 = this->m_data[8];
+			T& v12 = this->m_data[9];
 			T& v22 = this->m_data[10];
-			T& v23 = this->m_data[11];
+			T& v32 = this->m_data[11];
 
-			T& v30 = this->m_data[12];
-			T& v31 = this->m_data[13];
-			T& v32 = this->m_data[14];
+			T& v03 = this->m_data[12];
+			T& v13 = this->m_data[13];
+			T& v23 = this->m_data[14];
 			T& v33 = this->m_data[15];
 
 			Mat4()
@@ -281,7 +277,7 @@ namespace Renderer
 						this->at(1, c2) *
 						(this->at(2, c0) * this->at(3, c1) - this->at(2, c1) * this->at(3, c0));
 
-					determinant_value += sign * this->m_data[i] * det3x3;
+					determinant_value += sign * this->at(0, i) * det3x3;
 				}
 
 				return determinant_value;
@@ -313,15 +309,15 @@ namespace Renderer
 						int c2 = j != 2 && c1 != 2 ? 2 : 3;
 
 						T det3x3 =
-							cpy_data[r0*4+c0] *
-							(cpy_data[r1*4+c1] * cpy_data[r2*4+c2] - cpy_data[r1*4+c2] * cpy_data[r2*4+c1]) -
-							cpy_data[r0*4+c1] *
-							(cpy_data[r1*4+c0] * cpy_data[r2*4+c2] - cpy_data[r1*4+c2] * cpy_data[r2*4+c0]) +
-							cpy_data[r0*4+c2] *
-							(cpy_data[r1*4+c0] * cpy_data[r2*4+c1] - cpy_data[r1*4+c1] * cpy_data[r2*4+c0]);
+							cpy_data[c0*4+r0] *
+							(cpy_data[c1*4+r1] * cpy_data[c2*4+r2] - cpy_data[c1*4+r2] * cpy_data[c2*4+r1]) -
+							cpy_data[c0*4+r1] *
+							(cpy_data[c1*4+r0] * cpy_data[c2*4+r2] - cpy_data[c1*4+r2] * cpy_data[c2*4+r0]) +
+							cpy_data[c0*4+r2] *
+							(cpy_data[c1*4+r0] * cpy_data[c2*4+r1] - cpy_data[c1*4+r1] * cpy_data[c2*4+r0]);
 
 						// j as row i as col -> transpose
-						this->m_data[j * 4 + i] = inv_det * sign * det3x3;
+						this->m_data[i * 4 + j] = inv_det * sign * det3x3;
 					}
 				}
 			}
@@ -331,7 +327,8 @@ namespace Renderer
 				if(&_other == this)
 					return *this;
 
-				memcpy(this->m_data, _other.m_data, sizeof(T) * 16);
+				Mat4<T> temp(_other);
+				std::swap(temp.m_data, this->m_data);
 
 				return *this;
 			}
@@ -398,13 +395,15 @@ namespace Renderer
 	{
 		public:
 			T& v00 = this->m_data[0];
-			T& v01 = this->m_data[1];
-			T& v02 = this->m_data[2];
-			T& v10 = this->m_data[3];
+			T& v10 = this->m_data[1];
+			T& v20 = this->m_data[2];
+
+			T& v01 = this->m_data[3];
 			T& v11 = this->m_data[4];
-			T& v12 = this->m_data[5];
-			T& v20 = this->m_data[6];
-			T& v21 = this->m_data[7];
+			T& v21 = this->m_data[5];
+
+			T& v02 = this->m_data[6];
+			T& v12 = this->m_data[7];
 			T& v22 = this->m_data[8];
 
 			Mat3()
@@ -487,13 +486,13 @@ namespace Renderer
 						int index_l = j != 0 ? 0 : 1;
 						int index_r = j != 1 && index_l != 1 ? 1 : 2;
 						// a * b - c * d
-						T component_a = cpy_data[index_t * 3 + index_l];
-						T component_b = cpy_data[index_b * 3 + index_r];
-						T component_c = cpy_data[index_t * 3 + index_r];
-						T component_d = cpy_data[index_b * 3 + index_l];
+						T component_a = cpy_data[index_l * 3 + index_t];
+						T component_b = cpy_data[index_r * 3 + index_b];
+						T component_c = cpy_data[index_r * 3 + index_t];
+						T component_d = cpy_data[index_l * 3 + index_b];
 
 						// j as row i as col -> transpose
-						this->m_data[j * 3 + i] = inv_det * sign *
+						this->m_data[i * 3 + j] = inv_det * sign *
 							(component_a * component_b - component_c * component_d);
 					}
 				}
@@ -504,7 +503,8 @@ namespace Renderer
 				if(&_other == this)
 					return *this;
 
-				memcpy(this->m_data, _other.m_data, sizeof(T) * 9);
+				Mat3<T> temp(_other);
+				std::swap(_other.m_data, this->m_data);
 
 				return *this;
 			}
@@ -560,8 +560,9 @@ namespace Renderer
 	{
 		public:
 			T& v00 = this->m_data[0];
-			T& v01 = this->m_data[1];
-			T& v10 = this->m_data[2];
+			T& v10 = this->m_data[1];
+
+			T& v01 = this->m_data[2];
 			T& v11 = this->m_data[3];
 
 			Mat2()
@@ -629,7 +630,8 @@ namespace Renderer
 				if(&_other == this)
 					return *this;
 
-				memcpy(this->m_data, _other.m_data, sizeof(T) * 4);
+				Mat2<T> temp(_other);
+				std::swap(_other.m_data, this->m_data);
 
 				return *this;
 			}

@@ -56,10 +56,10 @@ void TestMat4Float()
 
 	// test the constructor with raw array
 	float raw_mat2[] = {
-		1.f, 3.f, 5.f, 4.f,
-		4.f, 2.f, 3.f, 3.f,
-		1.f, 7.f, 6.f, 7.f,
-		2.f, 3.f, 5.f, 1.f
+		1.f, 4.f, 1.f, 2.f,
+		3.f, 2.f, 7.f, 3.f,
+		5.f, 3.f, 6.f, 5.f,
+		4.f, 3.f, 7.f, 1.f
 	};
 	Renderer::Mat4<float> mat2(raw_mat2);
 	assert(mat2.v00 == 1.f && mat2.v01 == 3.f && mat2.v02 == 5.f && mat2.v03 == 4.f);
@@ -69,10 +69,10 @@ void TestMat4Float()
 
 	// test the constructor with values directly inputted
 	Renderer::Mat4<float> mat3(
-			2.f, 1.f, 7.f, 4.f,
-			5.f, 3.f, 4.f, 7.f,
-			2.f, 3.f, 6.f, 2.f,
-			4.f, 7.f, 5.f, 1.f
+		2.f, 1.f, 7.f, 4.f,
+		5.f, 3.f, 4.f, 7.f,
+		2.f, 3.f, 6.f, 2.f,
+		4.f, 7.f, 5.f, 1.f
 	);
 	assert(mat3.v00 == 2.f && mat3.v01 == 1.f && mat3.v02 == 7.f && mat3.v03 == 4.f);
 	assert(mat3.v10 == 5.f && mat3.v11 == 3.f && mat3.v12 == 4.f && mat3.v13 == 7.f);
@@ -107,10 +107,10 @@ void TestMat4Float()
 	PASSED("all constructors, operator=, operator==, operator!=");
 
 	float mat_mult_mat_ans[] = {
-		43.f, 53.f, 69.f, 39.f,
-		36.f, 40.f, 69.f, 39.f,
-		77.f, 89.f, 106.f, 72.f,
-		33.f, 33.f, 61.f, 40.f
+		43.f, 36.f, 77.f, 33.f,
+		53.f, 40.f, 89.f, 33.f,
+		69.f, 69.f, 106.f, 61.f,
+		39.f, 39.f, 72.f, 40.f
 	};
 	Renderer::Mat4<float> mat_mult_mat = mat2 * mat3;
 	for(int i=0;i<16;++i)
@@ -126,10 +126,10 @@ void TestMat4Float()
 	PASSED("operator* mat mult vec");
 
 	float mat_plus_mat_ans[] = {
-		3.f, 4.f, 12.f, 8.f,
-		9.f, 5.f, 7.f, 10.f,
-		3.f, 10.f, 12.f, 9.f,
-		6.f, 10.f, 10.f, 2.f
+		3.f, 9.f, 3.f, 6.f,
+		4.f, 5.f, 10.f, 10.f,
+		12.f, 7.f, 12.f, 10.f,
+		8.f, 10.f, 9.f, 2.f
 	};
 	Renderer::Mat4<float> mat_plus_mat = mat2 + mat3;
 	for(int i=0;i<16;++i)
@@ -138,10 +138,10 @@ void TestMat4Float()
 	PASSED("operator+");
 
 	float mat_minus_mat_ans[] = {
-		-1.f, 2.f, -2.f, 0.f,
-		-1.f, -1.f, -1.f, -4.f,
-		-1.f, 4.f, 0.f, 5.f,
-		-2.f, -4.f, 0.f, 0.f
+		-1.f, -1.f, -1.f, -2.f,
+		2.f, -1.f, 4.f, -4.f,
+		-2.f, -1.f, 0.f, 0.f,
+		0.f, -4.f, 5.f, 0.f
 	};
 	Renderer::Mat4<float> mat_minus_mat = mat2 - mat3;
 	for(int i=0;i<16;++i)
@@ -186,9 +186,9 @@ void TestMat3Float()
 
 	// test the constructor with raw array
 	float raw_mat2[] = {
-		1.f, 3.f, 5.f,
-		4.f, 2.f, 3.f,
-		1.f, 7.f, 6.f
+		1.f, 4.f, 1.f,
+		3.f, 2.f, 7.f,
+		5.f, 3.f, 6.f
 	};
 	Renderer::Mat3<float> mat2(raw_mat2);
 	assert(mat2.v00 == 1.f && mat2.v01 == 3.f && mat2.v02 == 5.f);
@@ -231,9 +231,9 @@ void TestMat3Float()
 	PASSED("all constructors, operator=, operator==, operator!=");
 
 	float mat_mult_mat_ans[] = {
-		27.f, 25.f, 49.f,
-		24.f, 19.f, 54.f,
-		49.f, 40.f, 71.f
+		27.f, 24.f, 49.f,
+		25.f, 19.f, 40.f,
+		49.f, 54.f, 71.f
 	};
 	Renderer::Mat3<float> mat_mult_mat = mat2 * mat3;
 	for(int i=0;i<9;++i)
@@ -249,9 +249,9 @@ void TestMat3Float()
 	PASSED("operator* mat mult vec");
 
 	float mat_plus_mat_ans[] = {
-		3.f, 4.f, 12.f,
-		9.f, 5.f, 7.f,
-		3.f, 10.f, 12.f
+		3.f, 9.f, 3.f,
+		4.f, 5.f, 10.f,
+		12.f, 7.f, 12.f
 	};
 	Renderer::Mat3<float> mat_plus_mat = mat2 + mat3;
 	for(int i=0;i<9;++i)
@@ -260,9 +260,9 @@ void TestMat3Float()
 	PASSED("operator+");
 
 	float mat_minus_mat_ans[] = {
-		-1.f, 2.f, -2.f,
 		-1.f, -1.f, -1.f,
-		-1.f, 4.f, 0.f
+		2.f, -1.f, 4.f,
+		-2.f, -1.f, 0.f
 	};
 	Renderer::Mat3<float> mat_minus_mat = mat2 - mat3;
 	for(int i=0;i<9;++i)
@@ -299,8 +299,8 @@ void TestMat2Float()
 
 	// test the constructor with raw array
 	float raw_mat2[] = {
-		1.f, 3.f,
-		4.f, 2.f
+		1.f, 4.f,
+		3.f, 2.f
 	};
 	Renderer::Mat2<float> mat2(raw_mat2);
 	assert(mat2.v00 == 1.f && mat2.v01 == 3.f);
@@ -338,8 +338,8 @@ void TestMat2Float()
 	PASSED("all constructors, operator=, operator==, operator!=");
 
 	float mat_mult_mat_ans[] = {
-		17.f, 10.f,
-		18.f, 10.f
+		17.f, 18.f,
+		10.f, 10.f
 	};
 	Renderer::Mat2<float> mat_mult_mat = mat2 * mat3;
 	for(int i=0;i<4;++i)
@@ -355,8 +355,8 @@ void TestMat2Float()
 	PASSED("operator* mat mult vec");
 
 	float mat_plus_mat_ans[] = {
-		3.f, 4.f,
-		9.f, 5.f
+		3.f, 9.f,
+		4.f, 5.f
 	};
 	Renderer::Mat2<float> mat_plus_mat = mat2 + mat3;
 	for(int i=0;i<4;++i)
@@ -365,8 +365,8 @@ void TestMat2Float()
 	PASSED("operator+");
 
 	float mat_minus_mat_ans[] = {
-		-1.f, 2.f,
-		-1.f, -1.f
+		-1.f, -1.f,
+		2.f, -1.f
 	};
 	Renderer::Mat2<float> mat_minus_mat = mat2 - mat3;
 	for(int i=0;i<4;++i)
@@ -458,21 +458,21 @@ void TestMatrixFloat()
 	PASSED(".transpose()");
 
 	assert(mat2.atRawIndex(0) == 1.f);
-	assert(mat2.atRawIndex(1) == 4.f);
-	assert(mat2.atRawIndex(2) == 5.f);
-	assert(mat2.atRawIndex(3) == 2.f);
+	assert(mat2.atRawIndex(1) == 2.f);
+	assert(mat2.atRawIndex(2) == 3.f);
+	assert(mat2.atRawIndex(3) == 4.f);
 	assert(mat2.atRawIndex(4) == 5.f);
-	assert(mat2.atRawIndex(5) == 4.f);
-	assert(mat2.atRawIndex(6) == 3.f);
-	assert(mat2.atRawIndex(7) == 6.f);
+	assert(mat2.atRawIndex(5) == 6.f);
+	assert(mat2.atRawIndex(6) == 5.f);
+	assert(mat2.atRawIndex(7) == 4.f);
 	assert(mat2.atRawIndex(8) == 3.f);
 
 	PASSED(".atRawIndex()");
 
 	float raw_mat_ans[] = {
-		1, 4, 5,
-		2, 5, 4,
-		3, 6, 3
+		1, 2, 3,
+		4, 5, 6,
+		5, 4, 3
 	};
 	const float* raw_mat = *mat2;
 	for(int i=0;i<9;++i)
@@ -493,9 +493,9 @@ void TestMatrixFloat()
 
 	Renderer::Mat<float, 3> mat_mult = mat2 * mat3;
 	float mat_mult_ans[] = {
-		50.f, 22.f, 26.f,
-		55.f, 26.f, 34.f,
-		60.f, 30.f, 42.f
+		50.f, 55.f, 60.f,
+		22.f, 26.f, 30.f,
+		26.f, 34.f, 42.f
 	};
 	for(int i=0;i<9;++i)
 		assert(std::abs(mat_mult.atRawIndex(i) - mat_mult_ans[i]) < TOLERANCE);
@@ -504,9 +504,9 @@ void TestMatrixFloat()
 
 	Renderer::Mat<float, 3> mat_sum = mat2 + mat3;
 	float mat_sum_ans[] = {
-		3.f, 8.f, 10.f,
-		9.f, 7.f, 8.f,
-		7.f, 8.f, 4.f
+		3.f, 9.f, 7.f,
+		8.f, 7.f, 8.f,
+		10.f, 8.f, 4.f
 	};
 	for(int i=0;i<9;++i)
 		assert(std::abs(mat_sum.atRawIndex(i) - mat_sum_ans[i]) < TOLERANCE);
@@ -515,9 +515,9 @@ void TestMatrixFloat()
 
 	Renderer::Mat<float, 3> mat_minus = mat2 - mat3;
 	float mat_minus_ans[] = {
-		-1.f, 0.f, 0.f,
-		-5.f, 3.f, 0.f,
-		-1.f, 4.f, 2.f
+		-1.f, -5.f, -1.f,
+		0.f, 3.f, 4.f,
+		0.f, 0.f, 2.f
 	};
 	for(int i=0;i<9;++i)
 		assert(std::abs(mat_minus.atRawIndex(i) - mat_minus_ans[i]) < TOLERANCE);
