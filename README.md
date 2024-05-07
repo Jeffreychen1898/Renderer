@@ -4,13 +4,23 @@ This is a simple renderer written in C++ and OpenGL 4.1 (because Mac only suppor
 
 ## How to use it
 Building the Library
+
 ```cd deps```
-```make all```
-```cd ../src/Renderer```
+
 ```make all```
 
-Running the tests
-```cd test/<folder name>```
+```cd ../src/Renderer```
+
 ```make all```
+
+
+
+Running the tests
+
+```cd test/<folder name>```
+
+```make all```
+
 Navigate to the root of the repository
+
 The executable should be in the "testbin" folder
