@@ -409,13 +409,13 @@ namespace Renderer
 		switch(it->second.type)
 		{
 			case UniformType::MAT2:
-				glUniformMatrix2fv(it->second.location, 1, GL_TRUE, _data);
+				glUniformMatrix2fv(it->second.location, 1, GL_FALSE, _data);
 				break;
 			case UniformType::MAT3:
-				glUniformMatrix3fv(it->second.location, 1, GL_TRUE, _data);
+				glUniformMatrix3fv(it->second.location, 1, GL_FALSE, _data);
 				break;
 			case UniformType::MAT4:
-				glUniformMatrix4fv(it->second.location, 1, GL_TRUE, _data);
+				glUniformMatrix4fv(it->second.location, 1, GL_FALSE, _data);
 				break;
 			default:
 				break;

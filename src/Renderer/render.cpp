@@ -318,7 +318,7 @@ namespace Renderer
 		m_shapeIndexCount = _indicesCount;
 		m_shapeVertexTracker = _vertexCount;
 		m_shapeVertexBytesLeft = Renderer::Shader::getCurrentShader()->getVertexBitSize();
-		m_startOfShapeVertexTracker = m_verticesTracker;
+		m_startOfShapeVertexTracker = m_verticesTracker / m_shapeVertexBytesLeft;
 	}
 
 	void Render::nextVertex()
@@ -390,6 +390,7 @@ namespace Renderer
 		assertShapeVertexSafeToStore(sizeof(float) * 2);
 		memcpy(m_verticesBatch + m_verticesTracker, &_v0, sizeof(float));
 		memcpy(m_verticesBatch + m_verticesTracker + sizeof(float), &_v1, sizeof(float));
+
 		m_verticesTracker += sizeof(float) * 2;
 	}
 
@@ -399,6 +400,7 @@ namespace Renderer
 		memcpy(m_verticesBatch + m_verticesTracker, &_v0, sizeof(float));
 		memcpy(m_verticesBatch + m_verticesTracker + sizeof(float), &_v1, sizeof(float));
 		memcpy(m_verticesBatch + m_verticesTracker + sizeof(float) * 2, &_v2, sizeof(float));
+
 		m_verticesTracker += sizeof(float) * 3;
 	}
 
